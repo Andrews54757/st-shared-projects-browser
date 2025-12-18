@@ -645,7 +645,7 @@ export default function App() {
               </button>
             )}
           </div>
-          <div className="space-y-4 rounded-2xl border bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
+          <div className="relative z-10 space-y-4 rounded-2xl border bg-white/80 p-4 shadow-sm backdrop-blur dark:border-gray-800 dark:bg-gray-900/80">
             <div className="space-y-2">
               <div className="text-sm font-semibold text-gray-700 dark:text-gray-200">Sort</div>
               <select
