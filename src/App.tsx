@@ -28,6 +28,7 @@ const WINDOW_SIZE = 200;
 const BUFFER_ROWS = 3;
 const ROW_GAP = 16;
 const SCROLL_PARAM_KEY = "idx";
+const DISCLAIMER_KEY = "stanalysis_disclaimer_ack";
 
 function parseListParam(raw: string | null): string[] {
   if (!raw) return [];
@@ -260,6 +261,33 @@ function Lightbox({ entry, onClose }: { entry: LitematicEntry | null; onClose: (
   );
 }
 
+function DisclaimerModal({ open, onAccept }: { open: boolean; onAccept: () => void }) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+      <div className="w-full max-w-lg rounded-2xl border border-red-200 bg-white p-6 shadow-2xl dark:border-red-900 dark:bg-gray-900">
+        <div className="mb-3 flex items-center gap-2 text-red-700 dark:text-red-200">
+          <span className="text-2xl" aria-hidden="true">⚠️</span>
+          <div className="text-lg font-bold">Use at your own risk</div>
+        </div>
+        <div className="space-y-2 text-sm text-gray-700 dark:text-gray-200">
+          <p>There is no guarantee that the devices listed by this tool are functional.</p>
+          <p>This is for a learning purposes only!</p>
+        </div>
+        <div className="mt-5 flex justify-end">
+          <button
+            type="button"
+            onClick={onAccept}
+            className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+          >
+            I understand
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [entries, setEntries] = useState<LitematicEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -282,6 +310,7 @@ export default function App() {
   const pendingScrollId = useRef<string | null>(null);
   const restoringRef = useRef(false);
   const lastPushedParamsRef = useRef<string>("");
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -318,6 +347,11 @@ export default function App() {
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  useEffect(() => {
+    const seen = localStorage.getItem(DISCLAIMER_KEY) === "ack";
+    setShowDisclaimer(!seen);
   }, []);
 
   const availableVersions = useMemo(() => {
@@ -716,6 +750,14 @@ export default function App() {
       <footer className="border-t py-6 text-center text-xs text-gray-500 dark:border-gray-800 dark:text-gray-400">
         Built for the Storage Tech 2 litematic archive. Copyright © 2025 All rights reserved.
       </footer>
+
+      <DisclaimerModal
+        open={showDisclaimer}
+        onAccept={() => {
+          localStorage.setItem(DISCLAIMER_KEY, "ack");
+          setShowDisclaimer(false);
+        }}
+      />
     </div>
   );
 }
