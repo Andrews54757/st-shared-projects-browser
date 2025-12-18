@@ -121,9 +121,7 @@ function AutocompleteBox({
   const [open, setOpen] = useState(false);
   const filtered = useMemo(() => {
     const lower = query.toLowerCase();
-    return options
-      .filter((opt) => !selected.includes(opt.value) && (!lower || opt.value.toLowerCase().includes(lower)))
-      .slice(0, 20);
+    return options.filter((opt) => !selected.includes(opt.value) && (!lower || opt.value.toLowerCase().includes(lower)));
   }, [options, query, selected]);
 
   const handleSelect = (value: string) => {
