@@ -584,7 +584,7 @@ export default function App() {
               <img src={logoimg} alt="Logo" className="h-9 w-9" />
             </div>
             <div>
-              <div className="text-xl font-bold">ST Share Projects Litematic Library</div>
+              <div className="text-xl font-bold">ST Share Projects Litematic Browser</div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Browse litematics posted in the #share-projects channel</div>
             </div>
           </div>
