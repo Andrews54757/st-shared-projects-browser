@@ -272,8 +272,22 @@ function DisclaimerModal({ open, onAccept }: { open: boolean; onAccept: () => vo
           <p>This tool indexes devices publicly listed in the Storage Tech Discord's share-projects channel posted before Dec 18 2025. This tool is not officially sanctioned by the Storage Tech Discord.</p>
           <p>As anyone can post their devices in share-projects, there is no guarantee that the devices listed by this tool are functional.</p>
           <p>This is for learning purposes only!</p>
+          <p>
+            For a collection of documented designs you can use, visit{" "}
+            <a href="https://storagetech2.org" target="_blank" rel="noreferrer" className="font-semibold text-blue-700 underline-offset-4 hover:underline dark:text-blue-300">
+              storagetech2.org
+            </a>.
+          </p>
         </div>
-        <div className="mt-5 flex justify-end">
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+          <a
+            href="https://storagetech2.org"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-lg border border-red-200 px-4 py-2 text-sm font-semibold text-red-700 hover:bg-red-50 dark:border-red-800 dark:text-red-200 dark:hover:bg-red-900/30"
+          >
+            Visit storagetech2.org
+          </a>
           <button
             type="button"
             onClick={onAccept}
@@ -446,7 +460,7 @@ export default function App() {
     const qs = params.toString();
     if (qs === lastPushedParamsRef.current) return;
     lastPushedParamsRef.current = qs;
-    window.history.pushState({}, "", `${window.location.pathname}?${qs}`);
+    window.history.replaceState({}, "", `${window.location.pathname}?${qs}`);
   }, [q, sortKey, versionIncludes, versionExcludes, authorIncludes, authorExcludes, preview?.id]);
 
   useEffect(() => {
